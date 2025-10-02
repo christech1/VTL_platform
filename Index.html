@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VTLABS Group</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a0d2e 50%, #0f0f23 100%);
+      color: #fff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      position: relative;
+    }
+
+    /* Main Content Wrapper */
+    .main-content {
+      margin-left: 280px;
+      min-height: 100vh;
+    }
+
+    /* Neural Background */
+    .neural-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+      z-index: -2;
+      animation: pulse 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.8; }
+      100% { opacity: 1; }
+    }
+
+    /* Geometric Shapes */
+    .geometric-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .shape {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .shape:nth-child(1) {
+      top: 10%; left: 10%; width: 80px; height: 80px; animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+      top: 60%; right: 10%; width: 50px; height: 50px; animation-delay: 5s;
+    }
+
+    .shape:nth-child(3) {
+      bottom: 20%; left: 20%; width: 100px; height: 100px; animation-delay: 10s;
+    }
+
+    .shape:nth-child(4) {
+      top: 50%; right: 20%; width: 60px; height: 60px; animation-delay: 15s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    /* Neural Lines */
+    .neural-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .neural-line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(255, 119, 198, 0.5), transparent);
+      height: 1px;
+      animation: scan 10s linear infinite;
+    }
+
+    .neural-line:nth-child(1) { top: 20%; width: 100%; animation-delay: 0s; }
+    .neural-line:nth-child(2) { top: 50%; width: 100%; animation-delay: 3s; }
+    .neural-line:nth-child(3) { top: 80%; width: 100%; animation-delay: 6s; }
+
+    @keyframes scan {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Glassmorphism */
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Left Sidebar */
+    .left-sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 280px;
+      height: 100vh;
+      padding: 2rem 1.5rem;
+      overflow-y: auto;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      visibility: visible; /* Explicitly visible */
+    }
+
+    .sidebar-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .sidebar-section h4 {
+      font-size: 1.1rem;
+      color: #ff77c6;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar-icon {
+      font-size: 1.2rem;
+    }
+
+    /* Applications Widget */
+    .applications-widget .applications-status {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .applications-widget .applications-status.open {
+      background: linear-gradient(45deg, #ff77c6, #7877c6);
+      color: #fff;
+    }
+
+    .applications-widget .applications-status.closed {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .applications-widget .cta-button {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .applications-widget .cta-button.closed {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    /* Announcements Widget */
+    .announcements-widget .announce-item {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .announce-date {
+      font-size: 0.75rem;
+      color: #ff77c6;
+      margin-bottom: 0.2rem;
+    }
+
+    .announce-item h5 {
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+      color: #fff;
+    }
+
+    .announce-item p {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      width: calc(100% - 280px);
+      left: 280px;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      transition: background 0.3s;
+    }
+
+    header.scrolled {
+      background: rgba(15, 15, 35, 0.8);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-img {
+      height: 40px;
+      width: auto;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      margin: 0;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.9;
+      font-weight: 500;
+      transition: opacity 0.3s, color 0.3s;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+      color: #ff77c6;
+    }
+
+    .external-link {
+      background: linear-gradient(45deg, #ff77c6, #7877c6);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      color: #fff !important;
+      opacity: 1 !important;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 4px;
+    }
+
+    .hamburger-line {
+      width: 25px;
+      height: 3px;
+      background: #fff;
+      transition: 0.3s;
+    }
+
+    .mobile-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 15, 35, 0.95);
+      flex-direction: column;
+      padding: 1rem;
+      gap: 1rem;
+      border-radius: 0 0 16px 16px;
+    }
+
+    .mobile-nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 0;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+    }
+
+    .mobile-nav a:hover {
+      opacity: 1;
+      color: #ff77c6;
+    }
+
+    /* Hero */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    .hero-logo {
+      position: absolute;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.8;
+      height: 60px;
+      width: auto;
+      z-index: 10;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #ff77c6;
+      margin-bottom: 1rem;
+      letter-spacing: 4px;
+    }
+
+    .hero h1 {
+      font-size: 5rem;
+      font-weight: 800;
+      margin: 0 0 1.5rem;
+      background: linear-gradient(45deg, #fff, #ff77c6, #7877c6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-description p {
+      font-size: 1.2rem;
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      opacity: 0.9;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-button {
+      padding: 1rem 2rem;
+      background: linear-gradient(45deg, #ff77c6, #7877c6);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(255, 119, 198, 0.3);
+    }
+
+    .cta-button.secondary {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Sections */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 4rem;
+      background: linear-gradient(45deg, #fff, #ff77c6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Projects */
+    .hexagon-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .hexagon {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      background: linear-gradient(45deg, rgba(120, 119, 198, 0.2), rgba(255, 119, 198, 0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .hexagon:hover {
+      transform: rotate(10deg) scale(1.05);
+    }
+
+    .hexagon-inner {
+      padding: 1.5rem;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      clip-path: inherit;
+      background: inherit;
+    }
+
+    .hexagon-inner h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #ff77c6;
+    }
+
+    .hexagon-inner p {
+      font-weight: 300;
+      opacity: 0.9;
+    }
+
+    /* Manufacturing Timeline */
+    .timeline-container {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 2px;
+      background: linear-gradient(to bottom, #7877c6, #ff77c6);
+      transform: translateX(-50%);
+      height: 100%;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .timeline-item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .timeline-content {
+      width: 45%;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .timeline-year {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #ff77c6;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-content h4 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-dot {
+      width: 20px;
+      height: 20px;
+      background: #ff77c6;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+      margin-right: 2rem;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+      margin-left: 2rem;
+    }
+
+    /* About/Contact */
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .contact-info, .contact-form {
+      padding: 2rem;
+    }
+
+    .contact-info h3, .contact-info h4 {
+      color: #ff77c6;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info p {
+      margin-bottom: 1rem;
+      opacity: 0.9;
+      font-weight: 300;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-family: inherit;
+    }
+
+    .form-group input::placeholder, .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(45deg, #ff77c6, #7877c6);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 2rem;
+      text-align: center;
+      margin-left: 280px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: #ff77c6;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-icon {
+      font-size: 1.5rem;
+      color: #fff;
+      opacity: 0.8;
+      transition: opacity 0.3s, color 0.3s;
+    }
+
+    .social-icon:hover {
+      opacity: 1;
+      color: #ff77c6;
+    }
+
+    .footer-copyright {
+      opacity: 0.7;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .left-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+      }
+
+      .left-sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content,
+      header,
+      footer {
+        margin-left: 0;
+      }
+
+      header {
+        width: 100%;
+        left: 0;
+      }
+
+      .logo-img {
+        height: 30px;
+      }
+
+      .logo-text {
+        font-size: 1.5rem;
+      }
+
+      .hero-logo {
+        height: 40px;
+        top: 1rem;
+      }
+
+      .mobile-menu-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-nav {
+        display: none;
+        width: calc(100% - 40px);
+      }
+
+      .mobile-nav.active {
+        display: flex;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .hero-description p {
+        font-size: 1rem;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+      }
+
+      section {
+        padding: 3rem 1rem;
+      }
+
+      .hexagon-container {
+        grid-template-columns: 1fr;
+      }
+
+      .hexagon {
+        height: 150px;
+      }
+
+      .timeline-line {
+        left: 20px;
+      }
+
+      .timeline-item {
+        flex-direction: column !important;
+        text-align: center;
+      }
+
+      .timeline-content {
+        width: 100% !important;
+        margin: 0 !important;
+      }
+
+      .timeline-dot {
+        left: 20px;
+      }
+
+      .contact-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      /* Mobile Sidebar Toggle */
+      .sidebar-toggle {
+        position: fixed;
+        left: 10px;
+        top: 80px;
+        z-index: 1001;
+        background: linear-gradient(45deg, #ff77c6, #7877c6);
+        border: none;
+        padding: 0.5rem;
+        border-radius: 50%;
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .contact-info, .contact-form {
+        padding: 1.5rem;
+      }
+
+      .logo-img {
+        height: 25px;
+      }
+
+      .logo-text {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background -->
+  <div class="neural-background"></div>
+  <div class="geometric-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <div class="neural-lines">
+    <div class="neural-line"></div>
+    <div class="neural-line"></div>
+    <div class="neural-line"></div>
+  </div>
+
+  <!-- Left Sidebar -->
+  <div class="left-sidebar glass" id="leftSidebar">
+    <!-- Applications Widget -->
+    <div class="sidebar-section applications-widget">
+      <h4><span class="sidebar-icon">📝</span>Applications</h4>
+      <div class="applications-status" id="appStatus">Applications Open</div>
+      <a href="training.html#apply" class="cta-button" id="applyBtn">Apply Now</a>
+    </div>
+
+    <!-- Announcements Widget -->
+    <div class="sidebar-section announcements-widget">
+      <h4><span class="sidebar-icon">📢</span>Announcements</h4>
+      <div class="announce-item">
+        <div class="announce-date">October 01, 2025</div>
+        <h5>akazi</h5>
+        <p>VTLABS iri gutanga akazi.</p>
+      </div>
+      <div class="announce-item">
+        <div class="announce-date">September 15, 2025</div>
+        <h5>umushyitsi</h5>
+        <p>guverineri wa kigali yasuye vtlabs</p>
+      </div>
+      <div class="announce-item">
+        <div class="announce-date">August 20, 2025</div>
+        <h5>kwirukana</h5>
+        <p>vtlabs yirukanye abakozi bigize nabi</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <header class="glass">
+      <nav>
+        <a href="#home" class="logo">
+          <img src="vtlabs-logo.png" alt="VTLABS Logo" class="logo-img">
+          <span class="logo-text">VTLABS</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="training.html#kits" class="external-link">Training Kits</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#manufacturing">Manufacturing</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="/my_web_dev__/index.html" class="external-link">VTL-CRAFT</a></li>
+        </ul>
+        <div class="mobile-menu-toggle">
+          <div class="hamburger-line"></div>
+          <div class="hamburger-line"></div>
+          <div class="hamburger-line"></div>
+        </div>
+      </nav>
+      <div class="mobile-nav">
+        <a href="training.html#kits" class="external-link">Training Kits</a>
+        <a href="#projects">Projects</a>
+        <a href="#manufacturing">Manufacturing</a>
+        <a href="#about">About Us</a>
+        <a href="/my_web_dev__/index.html" class="external-link">VTL-CRAFT</a>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <img src="vtlabs-logo.svg" alt="VTLABS Logo" class="hero-logo">
+      <div class="hero-content">
+        <div class="hero-subtitle">Empowering Education & Innovation</div>
+        <h1>VTLABS GROUP</h1>
+        <div class="hero-description">
+          <p>We design and manufacture advanced training kits, provide custom electronic solutions, and run hands-on technical training to empower the next generation of engineers and innovators.</p>
+        </div>
+        <div class="cta-buttons">
+          <a href="training.html#kits" class="cta-button">Explore Training Kits</a>
+          <a href="training.html" class="cta-button secondary">Join Training Center</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="showcase" id="projects">
+      <h2 class="section-title">Projects & R&D</h2>
+      <div class="hexagon-container">
+        <div class="hexagon">
+          <div class="hexagon-inner glass">
+            <h4>STEM Education</h4>
+            <p>Supporting schools with innovative learning kits.</p>
+          </div>
+        </div>
+        <div class="hexagon">
+          <div class="hexagon-inner glass">
+            <h4>Custom Electronics</h4>
+            <p>Design & prototyping for clients’ unique needs.</p>
+          </div>
+        </div>
+        <div class="hexagon">
+          <div class="hexagon-inner glass">
+            <h4>Automation Solutions</h4>
+            <p>Developing open-source PLC & industrial solutions.</p>
+          </div>
+        </div>
+        <div class="hexagon">
+          <div class="hexagon-inner glass">
+            <h4>AI & Robotics</h4>
+            <p>Exploring robotics and humanoid AI systems.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Manufacturing -->
+    <section class="timeline" id="manufacturing">
+      <h2 class="section-title">Our Manufacturing Journey</h2>
+      <div class="timeline-container">
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-content glass">
+            <div class="timeline-year">2022</div>
+            <h4>Founded VTLABS</h4>
+            <p>Started with a vision to produce affordable local training kits.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content glass">
+            <div class="timeline-year">2023</div>
+            <h4>First Training Kits</h4>
+            <p>Developed and delivered first electronics & IoT kits.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content glass">
+            <div class="timeline-year">2024</div>
+            <h4>Training Center</h4>
+            <p>Launched VTLABS Training Center with CAD, 3D Printing, and Embedded Systems courses.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content glass">
+            <div class="timeline-year">2025+</div>
+            <h4>Expanding Across Africa</h4>
+            <p>Partnering with schools, universities, and TVET boards to scale education solutions.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Us / Contact -->
+    <section class="contact" id="about">
+      <div class="contact-container">
+        <div class="contact-info glass">
+          <h3>About VTLABS</h3>
+          <p>VTLABS Group is a technology company specializing in designing and manufacturing electronics training kits, custom solutions, and STEM-focused training programs. Our mission is to empower learners and institutions with affordable, innovative, and practical tools.</p>
+          <h4>Contact Us</h4>
+          <p>Email: info@vtlabs.com</p>
+          <p>Phone/WhatsApp: +250 XXX XXX XXX</p>
+          <p>Location: Kigali, Rwanda</p>
+        </div>
+        <div class="contact-form glass">
+          <div class="form-group">
+            <input type="text" placeholder="Name" required>
+          </div>
+          <div class="form-group">
+            <input type="email" placeholder="Email" required>
+          </div>
+          <div class="form-group">
+            <input type="text" placeholder="Subject" required>
+          </div>
+          <div class="form-group">
+            <textarea rows="5" placeholder="Message" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <ul class="footer-links">
+          <li><a href="training.html#kits">Training Kits</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#manufacturing">Manufacturing</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="training.html">Training Center</a></li>
+        </ul>
+        <div class="social-icons">
+          <a href="https://twitter.com/vtlabsgroup" aria-label="Twitter" class="social-icon">🐦</a>
+          <a href="https://linkedin.com/company/vtlabsgroup" aria-label="LinkedIn" class="social-icon">💼</a>
+          <a href="https://instagram.com/vtlabsgroup" aria-label="Instagram" class="social-icon">📷</a>
+        </div>
+        <div class="footer-copyright">
+          <p>&copy; 2025 VTLABS Group. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Mobile Sidebar Toggle Button -->
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+
+  <script>
+    // Application Status Configuration
+    const applicationsOpen = true; // Change to false to close
+
+    // Update Application Status
+    function updateApplicationStatus() {
+      const statusEl = document.getElementById('appStatus');
+      const applyBtn = document.getElementById('applyBtn');
+      if (applicationsOpen) {
+        statusEl.textContent = 'Applications Open';
+        statusEl.className = 'applications-status open';
+        applyBtn.textContent = 'Apply Now';
+        applyBtn.className = 'cta-button';
+        applyBtn.href = 'training.html#apply';
+      } else {
+        statusEl.textContent = 'Applications Closed';
+        statusEl.className = 'applications-status closed';
+        applyBtn.textContent = 'Check Back Soon';
+        applyBtn.className = 'cta-button closed';
+        applyBtn.href = '#';
+      }
+    }
+
+    // Mobile Menu Toggle
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const mobileNav = document.querySelector('.mobile-nav');
+    toggle.addEventListener('click', () => {
+      mobileNav.classList.toggle('active');
+    });
+
+    // Mobile Sidebar Toggle
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const leftSidebar = document.getElementById('leftSidebar');
+    sidebarToggle.addEventListener('click', () => {
+      leftSidebar.classList.toggle('open');
+    });
+
+    // Header Scroll Effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Initialize
+    updateApplicationStatus();
+
+    // Form Submission
+    const form = document.querySelector('.contact-form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thank you for your message! We\'ll get back to you soon.');
+      form.reset();
+    });
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

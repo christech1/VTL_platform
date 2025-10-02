@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VTLABS Training Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a0d2e 50%, #0f0f23 100%);
+      color: #fff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      position: relative;
+    }
+
+    /* Main Content Wrapper */
+    .main-content {
+      margin-left: 280px;
+      min-height: 100vh;
+    }
+
+    /* Neural Background */
+    .neural-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+      z-index: -2;
+      animation: pulse 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.8; }
+      100% { opacity: 1; }
+    }
+
+    /* Geometric Shapes */
+    .geometric-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .shape {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .shape:nth-child(1) {
+      top: 10%; left: 10%; width: 80px; height: 80px; animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+      top: 60%; right: 10%; width: 50px; height: 50px; animation-delay: 5s;
+    }
+
+    .shape:nth-child(3) {
+      bottom: 20%; left: 20%; width: 100px; height: 100px; animation-delay: 10s;
+    }
+
+    .shape:nth-child(4) {
+      top: 50%; right: 20%; width: 60px; height: 60px; animation-delay: 15s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    /* Neural Lines */
+    .neural-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .neural-line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(255, 119, 198, 0.5), transparent);
+      height: 1px;
+      animation: scan 10s linear infinite;
+    }
+
+    .neural-line:nth-child(1) { top: 20%; width: 100%; animation-delay: 0s; }
+    .neural-line:nth-child(2) { top: 50%; width: 100%; animation-delay: 3s; }
+    .neural-line:nth-child(3) { top: 80%; width: 100%; animation-delay: 6s; }
+
+    @keyframes scan {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Glassmorphism */
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Left Sidebar */
+    .left-sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 280px;
+      height: 100vh;
+      padding: 2rem 1.5rem;
+      overflow-y: auto;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      visibility: visible;
+    }
+
+    .sidebar-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .sidebar-section h4 {
+      font-size: 1.1rem;
+      color: #ff77c6;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar-icon {
+      font-size: 1.2rem;
+    }
+
+    /* Applications Widget */
+    .applications-widget .applications-status {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .applications-widget .applications-status.open {
+      background: linear-gradient(45deg, #ff77c6, #7877c6);
+      color: #fff;
+    }
+
+    .applications-widget .applications-status.closed {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .applications-widget .cta-button {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .applications-widget .cta-button.closed {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    /* Announcements Widget */
+    .announcements-widget .announce-item {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .announce-date {
+      font-size: 0.75rem;
+      color: #ff77c6;
+      margin-bottom: 0.2rem;
+    }
+
+    .announce-item h5 {
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+      color: #fff;
+    }
+
+    .announce-item p {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    /* Student Projects Widget */
+    .student-projects-widget .project-item {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .project-item a {
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.9;
+      font-size: 0.85rem;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .project-item a:hover {
+      opacity: 1;
+      color: #ff77c6;
+    }
+
+    .project-icon {
+      font-size: 1rem;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      width: calc(100% - 280px);
+      left: 280px;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      transition: background 0.3s;
+    }
+
+    header.scrolled {
+      background: rgba(15, 15, 35, 0.8);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-img {
+      height: 40px;
+      width: auto;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 2px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      margin: 0;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.9;
+      font-weight: 500;
+      transition: opacity 0.3s, color 0.3s;
+      position: relative;
+    }
+
+    nav ul li a:hover,
+    nav ul li a.active {
+      opacity: 1;
+      color: #ff77c6;
+    }
+
+    nav ul li a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(45deg, #ff77c6, #7877c6);
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 4px;
+    }
+
+    .hamburger-line {
+      width: 25px;
+      height: 3px;
+      background: #fff;
+      transition: 0.3s;
+    }
+
+    .mobile-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 15, 35, 0.95);
+      flex-direction: column;
+      padding: 1rem;
+      gap: 1rem;
+      border-radius: 0 0 16px 16px;
+    }
+
+    .mobile-nav.active {
+      display: flex;
+    }
+
+    .mobile-nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 0;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+    }
+
+    .mobile-nav a:hover {
+      opacity: 1;
+      color: #ff77c6;
+    }
+
+    /* Hero */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(45deg, #fff, #ff77c6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+
+    /* Sections */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 4rem;
+      background: linear-gradient(45deg, #fff, #ff77c6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .course-card,
+    .card {
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s;
+      position: relative;
+    }
+
+    .course-card:hover,
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .course-card h3,
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #ff77c6;
+    }
+
+    .course-card p,
+    .card p {
+      font-weight: 300;
+      opacity: 0.9;
+    }
+
+    /* Benefits */
+    .benefits ul {
+      list-style: none;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .benefits li {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .benefits li::before {
+      content: '✔';
+      color: #ff77c6;
+      font-weight: bold;
+    }
+
+    /* Contact */
+    .contact {
+      text-align: center;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    input,
+    select,
+    button {
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-family: inherit;
+    }
+
+    input::placeholder,
+    select {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    button {
+      background: linear-gradient(45deg, #ff77c6, #7877c6);
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 2rem;
+      text-align: center;
+      margin-left: 280px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: #ff77c6;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-icon {
+      font-size: 1.5rem;
+      color: #fff;
+      opacity: 0.8;
+      transition: opacity 0.3s, color 0.3s;
+    }
+
+    .social-icon:hover {
+      opacity: 1;
+      color: #ff77c6;
+    }
+
+    .footer-copyright {
+      opacity: 0.7;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .left-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+      }
+
+      .left-sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content,
+      header,
+      footer {
+        margin-left: 0;
+      }
+
+      header {
+        width: 100%;
+        left: 0;
+        padding: 1rem;
+      }
+
+      .logo-img {
+        height: 30px;
+      }
+
+      .logo-text {
+        font-size: 1.5rem;
+      }
+
+      nav ul {
+        display: none;
+      }
+
+      .mobile-menu-toggle {
+        display: flex;
+      }
+
+      .mobile-nav {
+        display: none;
+        width: calc(100% - 40px);
+      }
+
+      .mobile-nav.active {
+        display: flex;
+      }
+
+      .hero h2 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      h2 {
+        font-size: 2.5rem;
+      }
+
+      section {
+        padding: 3rem 1rem;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      /* Mobile Sidebar Toggle */
+      .sidebar-toggle {
+        position: fixed;
+        left: 10px;
+        top: 80px;
+        z-index: 1001;
+        background: linear-gradient(45deg, #ff77c6, #7877c6);
+        border: none;
+        padding: 0.5rem;
+        border-radius: 50%;
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h2 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      .logo-img {
+        height: 25px;
+      }
+
+      .logo-text {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background -->
+  <div class="neural-background"></div>
+  <div class="geometric-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <div class="neural-lines">
+    <div class="neural-line"></div>
+    <div class="neural-line"></div>
+    <div class="neural-line"></div>
+  </div>
+
+  <!-- Left Sidebar -->
+  <div class="left-sidebar glass" id="leftSidebar">
+    <!-- Applications Widget -->
+    <div class="sidebar-section applications-widget">
+      <h4><span class="sidebar-icon">📝</span>Applications</h4>
+      <div class="applications-status" id="appStatus">Applications Open</div>
+      <a href="#apply" class="cta-button" id="applyBtn">Apply Now</a>
+    </div>
+
+ 
+
+    <!-- Student Projects Widget -->
+    <div class="sidebar-section student-projects-widget">
+      <h4><span class="sidebar-icon">🎓</span>Student Projects</h4>
+      <div class="project-item">
+        <a href="projects/iot-dashboard.html" class="project-icon">📡</a>
+        <span>IoT Smart Home Dashboard (Batch 2025)</span>
+      </div>
+      <div class="project-item">
+        <a href="projects/robot-arm.html" class="project-icon">🤖</a>
+        <span>Autonomous Robot Arm Prototype</span>
+      </div>
+      <div class="project-item">
+        <a href="projects/3d-printed-drone.html" class="project-icon">🛩️</a>
+        <span>Custom 3D-Printed Drone Design</span>
+      </div>
+      <div class="project-item">
+        <a href="projects/plc-automation.html" class="project-icon">⚙️</a>
+        <span>Industrial PLC Automation System</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <header class="glass">
+      <nav>
+        <a href="index.html" class="logo">
+          <img src="vtlabs-logo.png" alt="VTLABS Logo" class="logo-img">
+          <span class="logo-text">Training Center</span>
+        </a>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#kits">Training Kits</a></li>
+          <li><a href="training.html" class="active">Training</a></li>
+          <li><a href="manufacturing.html">Manufacturing</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+        <div class="mobile-menu-toggle">
+          <div class="hamburger-line"></div>
+          <div class="hamburger-line"></div>
+          <div class="hamburger-line"></div>
+        </div>
+      </nav>
+      <div class="mobile-nav">
+        <a href="index.html">Home</a>
+        <a href="#kits">Training Kits</a>
+        <a href="training.html" class="active">Training</a>
+        <a href="manufacturing.html">Manufacturing</a>
+        <a href="projects.html">Projects</a>
+        <a href="about.html">About Us</a>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero training-hero">
+      <div class="hero-content">
+        <h2>Empowering Education Through Technology</h2>
+        <p>At VTLABS, our Training Center blends practical courses with custom-built training kits. We focus on STEM education to equip learners with the tools to innovate and create solutions for the future.</p>
+      </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses glass">
+      <h2>Our Training Programs</h2>
+      <div class="grid">
+        <div class="course-card glass">
+          <h3>📡 IoT</h3>
+          <p>Learn Wi-Fi & GSM automation, dashboards, and smart solutions.</p>
+        </div>
+        <div class="course-card glass">
+          <h3>🔌 Embedded Systems</h3>
+          <p>Master microcontrollers (Arduino, ESP32, AVR) with real hardware.</p>
+        </div>
+        <div class="course-card glass">
+          <h3>📐 CAD / SolidWorks</h3>
+          <p>Professional 3D design and product modeling for engineering.</p>
+        </div>
+        <div class="course-card glass">
+          <h3>🖨️ 3D Printing</h3>
+          <p>Hands-on additive manufacturing, slicing, and prototyping.</p>
+        </div>
+        <div class="course-card glass">
+          <h3>⚡ Electronics</h3>
+          <p>From circuit design to PCB assembly and testing.</p>
+        </div>
+        <div class="course-card glass">
+          <h3>🌐 Networking</h3>
+          <p>Build and manage computer networks for real-world setups.</p>
+        </div>
+        <div class="course-card glass">
+          <h3>🌍 Web Design</h3>
+          <p>Create interactive websites and IoT dashboards.</p>
+        </div>
+        <div class="course-card glass">
+          <h3>🔥 Laser Cutting</h3>
+          <p>Digital fabrication with laser machines for STEM projects.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Training Kits Section -->
+    <section class="kits glass" id="kits">
+      <h2>STEM Training Kits for Education</h2>
+      <p>We don’t just train — we design and manufacture our own training kits that integrate multiple experiments into one platform, helping learners and educators maximize hands-on learning in STEM fields.</p>
+      <div class="grid">
+        <div class="card glass">
+          <h3>⚙️ PLC Training Kit</h3>
+          <p>For automation & industrial control education, based on OpenPLC.</p>
+        </div>
+        <div class="card glass">
+          <h3>📡 IoT Smart Home Kit</h3>
+          <p>Wi-Fi & GSM-based smart home projects with ESP32.</p>
+        </div>
+        <div class="card glass">
+          <h3>🤖 Robotics & Drone Kit</h3>
+          <p>For robotics, UAVs, and autonomous systems in STEM labs.</p>
+        </div>
+        <div class="card glass">
+          <h3>🔌 Electronics Prototyping Kit</h3>
+          <p>Multi-experiment kit for circuits, sensors, and embedded systems.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits glass">
+      <h2>Why Choose VTLABS?</h2>
+      <ul>
+        <li>Hands-on STEM learning with real hardware</li>
+        <li>Training supported by our own manufactured kits</li>
+        <li>Certified trainers with practical experience</li>
+        <li>Courses tailored for schools, universities, and professionals</li>
+        <li>Strong link between theory, prototyping, and manufacturing</li>
+      </ul>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact glass" id="apply">
+      <h2>Join Our Training</h2>
+      <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <select required>
+          <option value="">Select Course</option>
+          <option>IoT</option>
+          <option>Embedded Systems</option>
+          <option>CAD / SolidWorks</option>
+          <option>3D Printing</option>
+          <option>Electronics</option>
+          <option>Networking</option>
+          <option>Web Design</option>
+          <option>Laser Cutting</option>
+        </select>
+        <button type="submit">Enroll</button>
+      </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass">
+      <div class="footer-content">
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#kits">Training Kits</a></li>
+          <li><a href="training.html">Training</a></li>
+          <li><a href="manufacturing.html">Manufacturing</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+        <div class="social-icons">
+          <a href="https://twitter.com/vtlabsgroup" aria-label="Twitter" class="social-icon">🐦</a>
+          <a href="https://linkedin.com/company/vtlabsgroup" aria-label="LinkedIn" class="social-icon">💼</a>
+          <a href="https://instagram.com/vtlabsgroup" aria-label="Instagram" class="social-icon">📷</a>
+        </div>
+        <div class="footer-copyright">
+          <p>&copy; 2025 VTLABS Group | Training Center. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Mobile Sidebar Toggle Button -->
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+
+  <script>
+    // Application Status Configuration
+    const applicationsOpen = true; // Change to false to close
+
+    // Update Application Status
+    function updateApplicationStatus() {
+      const statusEl = document.getElementById('appStatus');
+      const applyBtn = document.getElementById('applyBtn');
+      if (applicationsOpen) {
+        statusEl.textContent = 'Applications Open';
+        statusEl.className = 'applications-status open';
+        applyBtn.textContent = 'Apply Now';
+        applyBtn.className = 'cta-button';
+        applyBtn.href = '#apply';
+      } else {
+        statusEl.textContent = 'Applications Closed';
+        statusEl.className = 'applications-status closed';
+        applyBtn.textContent = 'Check Back Soon';
+        applyBtn.className = 'cta-button closed';
+        applyBtn.href = '#';
+      }
+    }
+
+    // Mobile Menu Toggle
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const mobileNav = document.querySelector('.mobile-nav');
+    toggle.addEventListener('click', () => {
+      mobileNav.classList.toggle('active');
+    });
+
+    // Mobile Sidebar Toggle
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const leftSidebar = document.getElementById('leftSidebar');
+    sidebarToggle.addEventListener('click', () => {
+      leftSidebar.classList.toggle('open');
+    });
+
+    // Header Scroll Effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Initialize
+    updateApplicationStatus();
+
+    // Form Submission (basic alert for demo)
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thank you for enrolling! We\'ll contact you soon to confirm your spot.');
+      form.reset();
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
