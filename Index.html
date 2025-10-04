@@ -25,8 +25,13 @@
 
     /* Main Content Wrapper */
     .main-content {
-      margin-left: 280px;
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
       min-height: 100vh;
+    }
+
+    .main-content.sidebar-open {
+      margin-left: 280px;
     }
 
     /* Neural Background */
@@ -124,20 +129,66 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
 
-    /* Left Sidebar */
+    /* Left Sidebar - Auto Initial Popup */
     .left-sidebar {
       position: fixed;
-      left: 0;
+      left: -280px; /* Initially hidden */
       top: 0;
       width: 280px;
       height: 100vh;
       padding: 2rem 1.5rem;
       overflow-y: auto;
-      z-index: 999;
+      z-index: 1001;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-      visibility: visible; /* Explicitly visible */
+      transition: left 0.3s ease;
+      background: rgba(15, 15, 35, 0.95);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .left-sidebar.open {
+      left: 0;
+    }
+
+    /* Sidebar Trigger Area */
+    .sidebar-trigger {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 100vh;
+      z-index: 1000;
+      cursor: pointer;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.2rem;
+    }
+
+    .sidebar-trigger:hover {
+      background: rgba(255, 119, 198, 0.1);
+      color: #ff77c6;
+    }
+
+    .sidebar-hide-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+      z-index: 1002;
+    }
+
+    .sidebar-hide-btn:hover {
+      opacity: 1;
     }
 
     .sidebar-section {
@@ -186,6 +237,16 @@
       font-size: 0.9rem;
       border-radius: 20px;
       text-align: center;
+      background: linear-gradient(45deg, #ff77c6, #7877c6);
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .applications-widget .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 119, 198, 0.3);
     }
 
     .applications-widget .cta-button.closed {
@@ -193,6 +254,11 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       cursor: not-allowed;
       opacity: 0.7;
+    }
+
+    .applications-widget .cta-button.closed:hover {
+      transform: none;
+      box-shadow: none;
     }
 
     /* Announcements Widget */
@@ -220,19 +286,103 @@
       margin: 0;
     }
 
-    /* Header */
-    header {
-      position: fixed;
+    /* Student Projects Widget */
+    .student-projects-widget .project-item {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .project-item a {
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.9;
+      font-size: 0.85rem;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .project-item a:hover {
+      opacity: 1;
+      color: #ff77c6;
+    }
+
+    .project-icon {
+      font-size: 1rem;
+    }
+
+    /* Image Slider */
+    .image-slider {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
       top: 0;
-      width: calc(100% - 280px);
-      left: 280px;
-      z-index: 1000;
-      padding: 1rem 2rem;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
       transition: background 0.3s;
     }
 
-    header.scrolled {
-      background: rgba(15, 15, 35, 0.8);
+    .dot.active {
+      background: #ff77c6;
+    }
+
+    /* Header - Always on Top */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1002;
+      padding: 1rem 2rem;
+      transition: background 0.3s;
+      background: rgba(15, 15, 35, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     nav {
@@ -332,24 +482,14 @@
 
     /* Hero */
     .hero {
-      height: 100vh;
+      height: calc(100vh - 400px);
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 0 2rem;
       position: relative;
-    }
-
-    .hero-logo {
-      position: absolute;
-      top: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0.8;
-      height: 60px;
-      width: auto;
-      z-index: 10;
+      margin-top: 80px; /* Account for fixed header */
     }
 
     .hero-subtitle {
@@ -596,7 +736,7 @@
       background: rgba(0, 0, 0, 0.5);
       padding: 2rem;
       text-align: center;
-      margin-left: 280px;
+      margin-left: 0;
     }
 
     .footer-content {
@@ -650,23 +790,24 @@
     /* Responsive Design */
     @media (max-width: 768px) {
       .left-sidebar {
-        transform: translateX(-100%);
-        transition: transform 0.3s;
+        left: -280px;
       }
 
       .left-sidebar.open {
-        transform: translateX(0);
+        left: 0;
       }
 
-      .main-content,
-      header,
-      footer {
+      .main-content {
         margin-left: 0;
+      }
+
+      .main-content.sidebar-open {
+        margin-left: 280px;
       }
 
       header {
         width: 100%;
-        left: 0;
+        padding: 1rem;
       }
 
       .logo-img {
@@ -677,17 +818,12 @@
         font-size: 1.5rem;
       }
 
-      .hero-logo {
-        height: 40px;
-        top: 1rem;
+      .nav-links {
+        display: none;
       }
 
       .mobile-menu-toggle {
         display: flex;
-      }
-
-      .nav-links {
-        display: none;
       }
 
       .mobile-nav {
@@ -697,6 +833,11 @@
 
       .mobile-nav.active {
         display: flex;
+      }
+
+      .hero {
+        height: calc(100vh - 400px);
+        margin-top: 70px;
       }
 
       .hero h1 {
@@ -764,21 +905,6 @@
         flex-wrap: wrap;
         justify-content: center;
       }
-
-      /* Mobile Sidebar Toggle */
-      .sidebar-toggle {
-        position: fixed;
-        left: 10px;
-        top: 80px;
-        z-index: 1001;
-        background: linear-gradient(45deg, #ff77c6, #7877c6);
-        border: none;
-        padding: 0.5rem;
-        border-radius: 50%;
-        color: #fff;
-        cursor: pointer;
-        font-size: 1.2rem;
-      }
     }
 
     @media (max-width: 480px) {
@@ -801,6 +927,15 @@
       .logo-text {
         font-size: 1.3rem;
       }
+
+      .image-slider {
+        height: 300px;
+      }
+
+      .hero {
+        height: calc(100vh - 300px);
+        margin-top: 60px;
+      }
     }
   </style>
 </head>
@@ -819,8 +954,13 @@
     <div class="neural-line"></div>
   </div>
 
+  <!-- Sidebar Trigger Area -->
+  <div class="sidebar-trigger" id="sidebarTrigger">☰</div>
+
   <!-- Left Sidebar -->
   <div class="left-sidebar glass" id="leftSidebar">
+    <button class="sidebar-hide-btn" id="sidebarHideBtn">&times;</button>
+    
     <!-- Applications Widget -->
     <div class="sidebar-section applications-widget">
       <h4><span class="sidebar-icon">📝</span>Applications</h4>
@@ -847,19 +987,40 @@
         <p>vtlabs yirukanye abakozi bigize nabi</p>
       </div>
     </div>
+
+    <!-- Student Projects Widget -->
+    <div class="sidebar-section student-projects-widget">
+      <h4><span class="sidebar-icon">🎓</span>Student Projects</h4>
+      <div class="project-item">
+        <a href="projects/iot-dashboard.html" class="project-icon">📡</a>
+        <span>IoT Smart Home Dashboard (Batch 2025)</span>
+      </div>
+      <div class="project-item">
+        <a href="projects/robot-arm.html" class="project-icon">🤖</a>
+        <span>Autonomous Robot Arm Prototype</span>
+      </div>
+      <div class="project-item">
+        <a href="projects/3d-printed-drone.html" class="project-icon">🛩️</a>
+        <span>Custom 3D-Printed Drone Design</span>
+      </div>
+      <div class="project-item">
+        <a href="projects/plc-automation.html" class="project-icon">⚙️</a>
+        <span>Industrial PLC Automation System</span>
+      </div>
+    </div>
   </div>
 
   <!-- Main Content -->
-  <div class="main-content">
-    <!-- Header -->
+  <div class="main-content" id="mainContent">
+    <!-- Header - Always on Top -->
     <header class="glass">
       <nav>
         <a href="#home" class="logo">
-          <img src="vtlabs-logo.png" alt="VTLABS Logo" class="logo-img">
+          <img src="/vtlabs-logo.jpg" alt="VTLABS Logo" class="logo-img">
           <span class="logo-text">VTLABS</span>
         </a>
         <ul class="nav-links">
-          <li><a href="training.html#kits" class="external-link">Training Kits</a></li>
+          <li><a href="training.html" class="external-link">Training Center</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#manufacturing">Manufacturing</a></li>
           <li><a href="#about">About Us</a></li>
@@ -876,13 +1037,32 @@
         <a href="#projects">Projects</a>
         <a href="#manufacturing">Manufacturing</a>
         <a href="#about">About Us</a>
-        <a href="/my_web_dev__/index.html" class="external-link">VTL-CRAFT</a>
+        <a href="training.html" class="external-link">Training Center</a>
       </div>
     </header>
 
+    <!-- Image Slider -->
+    <div class="image-slider">
+      <div class="slider-container">
+        <div class="slide active">
+          <img src="https://images.unsplash.com/photo-1535223289827-42f1e9919769?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" alt="VTLABS Innovation Lab">
+        </div>
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" alt="Students Building Robotics">
+        </div>
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1581094794325-85531de6d8c9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" alt="Advanced Training Kit Demo">
+        </div>
+        <div class="slider-dots">
+          <span class="dot active" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+      </div>
+    </div>
+
     <!-- Hero -->
     <section class="hero" id="home">
-      <img src="vtlabs-logo.svg" alt="VTLABS Logo" class="hero-logo">
       <div class="hero-content">
         <div class="hero-subtitle">Empowering Education & Innovation</div>
         <h1>VTLABS GROUP</h1>
@@ -909,7 +1089,7 @@
         <div class="hexagon">
           <div class="hexagon-inner glass">
             <h4>Custom Electronics</h4>
-            <p>Design & prototyping for clients’ unique needs.</p>
+            <p>Design & prototyping for clients' unique needs.</p>
           </div>
         </div>
         <div class="hexagon">
@@ -1018,12 +1198,36 @@
     </footer>
   </div>
 
-  <!-- Mobile Sidebar Toggle Button -->
-  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
-
   <script>
+    // Image Slider
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      let slides = document.getElementsByClassName("slide");
+      let dots = document.getElementsByClassName("dot");
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active");
+      }
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("active");
+      }
+      slides[slideIndex-1].classList.add("active");
+      dots[slideIndex-1].classList.add("active");
+    }
+
+    setInterval(() => {
+      slideIndex++;
+      if (slideIndex > 3) { slideIndex = 1; }
+      showSlides(slideIndex);
+    }, 4000); // Auto-advance every 4 seconds
+
     // Application Status Configuration
-    const applicationsOpen = true; // Change to false to close
+    const applicationsOpen = true;
 
     // Update Application Status
     function updateApplicationStatus() {
@@ -1044,27 +1248,75 @@
       }
     }
 
+    // Sidebar Auto-Initial Popup Logic
+    const sidebar = document.getElementById('leftSidebar');
+    const mainContent = document.getElementById('mainContent');
+    const hideBtn = document.getElementById('sidebarHideBtn');
+    const sidebarTrigger = document.getElementById('sidebarTrigger');
+    
+    let sidebarTimeout;
+    let isSidebarOpen = false;
+
+    // Function to open sidebar
+    function openSidebar() {
+      clearTimeout(sidebarTimeout);
+      sidebar.classList.add('open');
+      mainContent.classList.add('sidebar-open');
+      isSidebarOpen = true;
+    }
+
+    // Function to close sidebar
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      mainContent.classList.remove('sidebar-open');
+      isSidebarOpen = false;
+    }
+
+    // Auto-open sidebar on page load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        openSidebar();
+      }, 500); // Delay for better user experience
+    });
+
+    // Auto-open sidebar on mouse entering trigger area
+    sidebarTrigger.addEventListener('mouseenter', () => {
+      openSidebar();
+    });
+
+    // Auto-close sidebar after delay when mouse leaves sidebar
+    sidebar.addEventListener('mouseleave', () => {
+      sidebarTimeout = setTimeout(() => {
+        closeSidebar();
+      }, 500); // Close after 500ms delay
+    });
+
+    // Cancel auto-close if mouse re-enters sidebar
+    sidebar.addEventListener('mouseenter', () => {
+      clearTimeout(sidebarTimeout);
+    });
+
+    // Manual close with button
+    hideBtn.addEventListener('click', () => {
+      closeSidebar();
+    });
+
     // Mobile Menu Toggle
     const toggle = document.querySelector('.mobile-menu-toggle');
     const mobileNav = document.querySelector('.mobile-nav');
-    toggle.addEventListener('click', () => {
-      mobileNav.classList.toggle('active');
-    });
-
-    // Mobile Sidebar Toggle
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const leftSidebar = document.getElementById('leftSidebar');
-    sidebarToggle.addEventListener('click', () => {
-      leftSidebar.classList.toggle('open');
-    });
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        mobileNav.classList.toggle('active');
+      });
+    }
 
     // Header Scroll Effect
     window.addEventListener('scroll', () => {
       const header = document.querySelector('header');
       if (window.scrollY > 100) {
-        header.classList.add('scrolled');
+        header.style.background = 'rgba(15, 15, 35, 0.95)';
       } else {
-        header.classList.remove('scrolled');
+        header.style.background = 'rgba(15, 15, 35, 0.9)';
       }
     });
 
@@ -1073,11 +1325,13 @@
 
     // Form Submission
     const form = document.querySelector('.contact-form');
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('Thank you for your message! We\'ll get back to you soon.');
-      form.reset();
-    });
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for your message! We\'ll get back to you soon.');
+        form.reset();
+      });
+    }
 
     // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
